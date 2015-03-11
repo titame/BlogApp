@@ -1,0 +1,21 @@
+<h4>Your blog preview</h4>
+<div align = "center">
+  <h1><%= @blog.title %></h1>
+  <p>Description: <%= @blog.description %></p>
+  <% if @blog.tags %>
+    <p>Tags: <%= @blog.tags %></p>
+  <% end %>
+  <p>
+    <%= link_to 'Edit', edit_blog_path(@blog) %>
+    <%= link_to 'Destroy', @blog, method: :delete,
+      data: { confirm: 'Are you sure?' } %>
+  </p>
+  <% if @blog.status == "post-banned" %>
+    <p>This blog has been banned. Contact admin for help!</p>
+  <% else %>
+    <p>
+      Looks good?
+      <%= button_to 'Publish Blog', transition_blog_path(@blog, status: "post-published") %>
+    </p>
+  <% end %>
+</div>

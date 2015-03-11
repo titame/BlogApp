@@ -1,0 +1,8 @@
+<tr>
+  <td><%= blog.user.email %></td>
+  <td><%= blog.title %></td>
+  <td><%= truncate(blog.description, size: 30) %></td>
+  <td><%= link_to "View Comments", blog_comments_path(blog)%>
+</tr>
+
+

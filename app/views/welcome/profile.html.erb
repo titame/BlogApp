@@ -1,0 +1,12 @@
+<%= link_to 'Create Blog', new_blog_path %><br/>
+<% if current_user.blogs.exists? %>
+  <%= link_to 'My Blogs', blogs_path %><br/>
+<% end %>
+<%= link_to 'All Blogs', published_blogs_path %><br/>
+<% if current_user.admin? %>
+  <%= link_to 'Blog List', blogs_list_path %><br/>
+<% end %>
+
+
+
+

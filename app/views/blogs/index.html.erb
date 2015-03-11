@@ -1,0 +1,26 @@
+<table border="2", align = "center">
+  <% if @blogs.present? %>
+    <tr>
+      <th colspan = "2">Title</th>
+      <th >Status</th>
+    </tr>
+    <% @blogs.each do |blog| %>
+      <tr>
+        <td colspan = "2"><%= blog.title %></td>
+        <% if blog.status == "post-created" %>
+          <td><%= button_to 'Publish Blog', transition_blog_path(blog, status: "post-published") %></td>
+          <td><%= link_to 'Preview', preview_blog_path(blog) %></td>
+        <% else %>
+          <td><%= blog.status %></td>
+          <td><%= link_to 'View', blog %></td>
+        <% end %>
+        <td><%= link_to 'Edit', edit_blog_path(blog) %></td>
+        <td><%= link_to 'Destroy', blog, method: :delete,
+          data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  <% else %>
+  <h3>You have not created any blogs yet.Please create one!</h3>
+  <% end %>
+</table>
+

@@ -1,0 +1,18 @@
+<div>
+  <% if notice %>
+    <p id="notice"><%= notice %></p>
+  <% end %>
+  <%= form_for([@blog,@comment]) do |f| %>
+    <%= render 'shared/error_messages', var: @comment%>
+    <fieldset>
+      <legend>Enter Comment Below</legend>
+      <div class="field">
+        <%= f.label :post, 'Post:' %>
+        <%= f.text_area :post %>
+      </div>
+      <div>
+        <%= f.submit "Add Comment" %>
+      </div>
+    </fieldset>
+  <% end %>
+</div>

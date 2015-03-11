@@ -1,0 +1,26 @@
+<div>
+  <% if notice %>
+    <p id="notice"><%= notice %></p>
+  <% end %>
+  <%= form_for(@blog) do |f| %>
+    <%= render 'shared/error_messages', var: @blog%>
+    <fieldset>
+      <legend>Enter blog Details</legend>
+      <div class="field">
+        <%= f.label :title, 'Title:' %>
+        <%= f.text_field :title, size: 20 %>
+      </div>
+      <div class="field">
+        <%= f.label :description, 'Description:' %>
+        <%= f.text_area :description %>
+      </div>
+      <div class="field">
+        <%= f.label :tags, 'Add Tags:' %>
+        <%= f.text_area :tags %>
+      </div>
+      <div>
+        <%= f.submit "Create" %>
+      </div>
+    </fieldset>
+  <% end %>
+</div>

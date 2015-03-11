@@ -1,0 +1,37 @@
+<div align = "left">
+  <h1><%= @blog.title %></h1>
+  <% if !@blog.picture.nil? %>
+    <%= image_tag(@blog.picture.img_url, height: 50, width: 50) %>
+  <% end %>
+  <p>Description: <%= @blog.description %></p>
+  <% if @blog.tags %>
+    <p>Tags: <%= @blog.tags %></p>
+  <% end %>
+  <% if @blog.comments.exists? %>
+    <h3>---Comments---</h3>
+    <ul>
+      <% @blog.comments.each do |comment|%>
+        <li>
+          <%= comment.post %>
+          <% if ((comment.user == current_user) || (current_user.admin?)) %>
+            <%= link_to 'Edit ', edit_blog_comment_path(@blog,comment) %>|
+            <%= link_to 'Delete', blog_comment_path(@blog,comment), method: :delete, data: { confirm: 'are you sure?' } %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+  <%= link_to 'Add New Comment', new_blog_comment_path(@blog) %>
+  <% if ((@blog.user == current_user) || (current_user.admin?)) %>
+    |<%= link_to 'Edit Blog ', edit_blog_path(@blog) %>|
+    <%= link_to 'Delete Blog', @blog, method: :delete, data: { confirm: 'are you sure?' } %>
+  <% end %>
+  <% if current_user.admin? %>
+    <% if @blog.status != "post-banned" %>
+      <%= button_to 'Unpublish', transition_blog_path(@blog, status: "post-banned") %>
+    <% else %>
+      <%= button_to 'Republish', transition_blog_path(@blog, status: "post-republished") %>
+    <% end %>
+  <% end %>
+</div>
+
