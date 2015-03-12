@@ -14,6 +14,7 @@ class CommentsController < ApplicationController
     unless authorized_user?(@comment)
       redirect_to root_url, notice: "You are not authorised to edit this comment!"
     end
+    debugger
   end
 
   def create

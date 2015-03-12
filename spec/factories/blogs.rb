@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :blog do
+    association :user
     title "MyString"
     description "MyString"
     tags "MyText"
