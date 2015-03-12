@@ -2,8 +2,8 @@
   <% if notice %>
     <p id="notice"><%= notice %></p>
   <% end %>
-  <%= form_for(@blog) do |f| %>
-    <%= render 'shared/error_messages', var: @blog%>
+  <%= form_for(blog) do |f| %>
+    <%= render 'shared/error_messages', resource: blog%>
     <fieldset>
       <legend>Enter blog Details</legend>
       <div class="field">

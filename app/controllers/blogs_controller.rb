@@ -1,6 +1,6 @@
 class BlogsController < ApplicationController
-  before_action :set_blog, only: [:edit, :show, :preview, :update, :transition, :destroy]
   before_action :authenticate_admin, only: [:list_blogs, :populate_blogs]
+  before_action :set_blog, only: [:edit, :show, :preview, :update, :transition, :destroy]
 
   def new
     @blog = Blog.new
@@ -11,7 +11,7 @@ class BlogsController < ApplicationController
   end
 
   def edit
-    if ((current_user != @blog.user) && (!current_user.admin?))
+    unless authorized_user?(@blog)
       redirect_to root_url, notice: "You are not authorised to edit this blog"
     end
   end
@@ -20,7 +20,7 @@ class BlogsController < ApplicationController
   end
 
   def preview
-    if @blog.user != current_user
+    unless authorized_user?(@comment)
       redirect_to root_url, notice: "You are not authorised to preview this blog"
     end
   end
@@ -51,9 +51,6 @@ class BlogsController < ApplicationController
   end
 
   def destroy
-    if @blog.user != current_user
-      redirect_to root_url, notice: "You are not authorised to edit this blog"
-    end
     if @blog.destroy
       redirect_to @blog, notice: 'blog was successfully deleted'
     end
@@ -63,7 +60,7 @@ class BlogsController < ApplicationController
     if current_user.admin?
       @blogs = Blog.all
     else
-      @blogs = Blog.where(status: ["post-published","post-republished"])
+      @blogs = Blog.publishable_blogs
     end
     if @blogs.empty?
       redirect_to root_url, notice: "Sorry.No blogs available!"
@@ -71,7 +68,7 @@ class BlogsController < ApplicationController
   end
 
   def list_blogs
-    @blogs = Blog.select("id,user_id,title,description,created_at").order(created_at: :desc)
+    @blogs = Blog.all.order(created_at: :desc)
   end
 
   def populate_blogs
@@ -90,13 +87,9 @@ class BlogsController < ApplicationController
   end
 
   def authenticate_admin
-    if(!current_user.admin?)
+    unless current_user.admin?
       redirect_to root_url, notice: "You are not authorised to view this page!"
     end
-  end
-
-  def bad_access
-    redirect_to root_url, notice: "Sorry!Page you are trying to access doesn't exists"
   end
 
 end

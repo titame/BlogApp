@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    if ((current_user != @comment.user) && (!current_user.admin?))
+    unless authorized_user?(@comment)
       redirect_to root_url, notice: "You are not authorised to edit this comment!"
     end
   end

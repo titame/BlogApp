@@ -1,11 +1,11 @@
-<% if var.errors.any? %>
+<% if resource.errors.any? %>
   <div id="error_explanation">
     <h4>
-      <%= pluralize(var.errors.count, "error") %>
+      <%= pluralize(resource.errors.count, "error") %>
       prohibited this form from being saved
     </h4>
     <ul>
-      <% var.errors.full_messages.each do |message| %>
+      <% resource.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
     </ul>

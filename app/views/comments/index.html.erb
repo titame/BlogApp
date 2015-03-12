@@ -4,7 +4,7 @@
   <ul>
     <% @comments.each do |comment|%>
       <li><%= comment.post %></li>
-      <% if ((comment.user == current_user) || (current_user.admin?)) %>
+      <% if authorized_user?(comment) %>
         <%= link_to "Edit", edit_blog_comment_path(@blog,comment) %>|
         <%= link_to "Remove", blog_comment_path(@blog,comment), method: :delete, data: { confirm: "Are you sure?"} %>
       <% end %>

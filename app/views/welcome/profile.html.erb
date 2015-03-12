@@ -2,9 +2,9 @@
 <% if current_user.blogs.exists? %>
   <%= link_to 'My Blogs', blogs_path %><br/>
 <% end %>
-<%= link_to 'All Blogs', published_blogs_path %><br/>
+<%= link_to 'All Blogs', published_blogs_blogs_path %><br/>
 <% if current_user.admin? %>
-  <%= link_to 'Blog List', blogs_list_path %><br/>
+  <%= link_to 'Blog List', list_blogs_blogs_path %><br/>
 <% end %>
 
 

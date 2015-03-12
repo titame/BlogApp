@@ -4,4 +4,8 @@ class Blog < ActiveRecord::Base
   has_one :picture, as: :imageable
   validates :title, length: { minimum: 3, maximum: 15}
   validates :description, presence: true
+
+  def self.publishable_blogs
+    where(status: ["post-published","post-republished"])
+  end
 end

@@ -4,15 +4,18 @@ Rails.application.routes.draw do
 
   root to:"welcome#profile"
 
-  get "blogs/populate_blogs", to: "blogs#populate_blogs", as: :populate_blogs
-  get "blogs/blogs_list", to: "blogs#list_blogs", as: :blogs_list
-  get "blogs/published_blogs", to: "blogs#published_blogs", as: :published_blogs
-
   resources :blogs do
     resources :comments
+
     member do
       post 'transition'
       get 'preview'
+    end
+
+    collection do
+      get 'populate_blogs'
+      get 'list_blogs'
+      get 'published_blogs'
     end
   end
 
