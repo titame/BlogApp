@@ -3,7 +3,7 @@ include ControllerMacros
 
 describe BlogsController do
   before :each do
-    @user = ControllerMacros::login_user
+    @user = login_user
     @blog = create(:blog, user: @user)
   end
 
@@ -73,18 +73,19 @@ describe BlogsController do
 
   describe "POST #update" do
     before :each do
-      let(:new_blog) { @new_blog = create(:blog)}
+      @new_blog =create(:blog, title: "NewBlog")
     end
 
     context "with valid params" do
       it "updates blog of current user" do
-        post :update, id: @blog, blog: @new_blog
+        debugger
+        post :update, id: @blog, blog: {title: @new_blog.title}
         @blog.reload
         expect(@blog.title).to eq @new_blog.title
       end
 
       it "rediects to updated blogs page" do
-        post :update, id: @blog, blog: @new_blog
+        post :update, id: @blog, blog: {title: @new_blog.title}
         expect(response).to redirect_to(@blog)
       end
     end

@@ -8,5 +8,4 @@ FactoryGirl.define do
       post nil
     end
   end
-
 end

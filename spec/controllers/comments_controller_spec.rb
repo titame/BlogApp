@@ -77,17 +77,18 @@ describe CommentsController do
   describe "POST #update" do
     before :each do
       @comment = create(:comment, blog: @blog, user: @user)
+      @new_comment =create(:comment, post: "NewPost")
     end
 
     context "with valid params" do
       it "updates comment of current user" do
-        post :update, blog_id: @blog, id: @comment, comment: {post: "Newcomment"}
+        post :update, blog_id: @blog, id: @comment, comment: { post: @new_comment.post }
         @comment.reload
-        expect(@comment.post).to eq "Newcomment"
+        expect(@comment.post).to eq @new_comment.post
       end
 
       it "rediects to updated comments page" do
-        post :update, blog_id: @blog, id: @comment, comment: {post: "Newcomment"}
+        post :update, blog_id: @blog, id: @comment, comment: { post: @new_comment.post }
         expect(response).to redirect_to(@blog)
       end
     end
