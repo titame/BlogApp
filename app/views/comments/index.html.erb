@@ -5,8 +5,8 @@
     <% @comments.each do |comment|%>
       <li><%= comment.post %></li>
       <li>
-        <% if @comment.taggings.first.value %>
-          <% @comment.taggings.each do |tag| %>
+        <% if comment.taggings.first %>
+          <% comment.taggings.each do |tag| %>
            <%= tag.value %>
           <% end %>
          <% end %>

@@ -8,7 +8,6 @@ class WelcomeController < ApplicationController
   def search
     @blogs = Blog.search(params[:key])
     @comments = Comment.search(params[:key])
-    debugger
     render 'search_result', locals: { blogs: @blogs, comments: @comments}
   end
 

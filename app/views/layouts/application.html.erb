@@ -9,7 +9,7 @@
 <body>
 <p class="navbar-text pull-right">
   <% if user_signed_in? %>
-    <% if !current_user.picture.nil? %>
+    <% unless current_user.picture.nil? %>
       <%= image_tag(current_user.picture.img_url, height: 50, width: 50) %>
     <% end %>
     Logged in as <strong><%= current_user.email %></strong>.

@@ -13,7 +13,6 @@ class Comment < ActiveRecord::Base
     tag_vals = values.split(',')
     tag_vals.each do |tag_val|
       if (tagging_val = Tagging.find_by(value: tag_val))
-        debugger
         tag = tags.create
         tag.tagging = tagging_val
         tag.save

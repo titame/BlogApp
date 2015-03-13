@@ -4,7 +4,7 @@
     <%= image_tag(@blog.picture.img_url, height: 50, width: 50) %>
   <% end %>
   <p>Description: <%= @blog.description %></p>
-  <% if @blog.taggings.first.value %>
+  <% if @blog.taggings.first %>
     <% @blog.taggings.each do |tag| %>
       <%= tag.value %>
     <% end %>

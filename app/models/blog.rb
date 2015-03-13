@@ -26,11 +26,4 @@ class Blog < ActiveRecord::Base
     end
   end
 
-  # def assign_values
-  #   tag_vals = values.split(',')
-  #   tag_vals.each do |tag_val|
-  #     taggings.create(value: tag_val)
-  #   end
-  # end
-
 end
