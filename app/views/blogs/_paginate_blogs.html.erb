@@ -1,0 +1,24 @@
+<table border = "1", align = "center">
+  <tr>
+    <th>User</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Date</th>
+  </tr>
+  <% @paginate_blogs.each do |blog|%>
+    <tr>
+      <td><%= blog.user.email %></td>
+      <td><%= blog.title %></td>
+      <td><%= truncate(blog.description, size: 30) %></td>
+      <td><%= blog.created_at %></td>
+    </tr>
+  <% end %>
+</table>
+<div align = "center">
+  <% if @paginate_blogs.count <= 5 %>
+    <%= link_to "Prev", list_blogs_blogs_path(offset_val: -5), remote: true, method: :get %>
+  <% end %>
+  <% unless @paginate_blogs.count < 5 %>
+    <%= link_to "Next", list_blogs_blogs_path(offset_val: 5), remote: true, method: :get %>
+  <% end %>
+</div>

@@ -15,8 +15,16 @@
         <%= f.text_area :description %>
       </div>
       <div class="field">
-        <%= f.label :tags, 'Add Tags:' %>
-        <%= f.text_area :tags %>
+      <%= f.fields_for :picture do |p| %>
+        <%= p.label :img_url, 'Image URL:' %>
+        <%= p.text_area :img_url %>
+      <% end %>
+      </div>
+      <div class="field">
+      <%= f.fields_for :tag do |t| %>
+        <%= t.label :values, 'Tags:' %>
+        <%= t.text_area :values %>
+      <% end %>
       </div>
       <div>
         <%= f.submit "Create" %>

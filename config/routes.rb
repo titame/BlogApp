@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   root to:"welcome#profile"
+  post '/search' => "welcome#search"
 
   resources :blogs do
     resources :comments
@@ -18,6 +19,8 @@ Rails.application.routes.draw do
       get 'published_blogs'
     end
   end
+
+
 
 
 

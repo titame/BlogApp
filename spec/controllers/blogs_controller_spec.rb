@@ -1,7 +1,11 @@
 require 'spec_helper'
+include ControllerMacros
 
 describe BlogsController do
-  login_user
+  before :each do
+    @user = ControllerMacros::login_user
+    @blog = create(:blog, user: @user)
+  end
 
   describe "GET #new" do
     it "it assigns new instance of blog" do
@@ -17,7 +21,6 @@ describe BlogsController do
 
   describe "GET #index" do
     it "assigns current users blogs to @blogs" do
-      @blog = create(:blog, user: @user)
       get :index
       expect(assigns(:blogs)).to include @blog
     end
@@ -30,7 +33,6 @@ describe BlogsController do
 
   describe "GET #edit" do
     it "renders edit template for blog if user is authorized" do
-      @blog = create(:blog, user: @user)
       get :edit, id: @blog
       expect(response).to render_template(:edit)
     end
@@ -45,6 +47,7 @@ describe BlogsController do
   describe "POST #create" do
     context "with valid params" do
       it "creates blog of current user" do
+        debugger
         expect{ post :create, blog: attributes_for(:blog)
           }.to change(Blog, :count).by(1)
       end
@@ -69,24 +72,25 @@ describe BlogsController do
   end
 
   describe "POST #update" do
+    before :each do
+      let(:new_blog) { @new_blog = create(:blog)}
+    end
+
     context "with valid params" do
       it "updates blog of current user" do
-        @blog = create(:blog, user: @user)
-        post :update, id: @blog, blog: {title: "NewBlog"}
+        post :update, id: @blog, blog: @new_blog
         @blog.reload
-        expect(@blog.title).to eq "NewBlog"
+        expect(@blog.title).to eq @new_blog.title
       end
 
       it "rediects to updated blogs page" do
-        @blog = create(:blog, user: @user)
-        post :update, id: @blog, blog: {title: "NewBlog"}
+        post :update, id: @blog, blog: @new_blog
         expect(response).to redirect_to(@blog)
       end
     end
 
     context "with invalid params" do
       it "do not update blog of current user" do
-        @blog = create(:blog, user: @user)
         post :update, id: @blog, blog: {title: ""}
         expect(response).to render_template(:edit)
       end
@@ -95,9 +99,9 @@ describe BlogsController do
 
     describe "POST #destroy" do
       it "destroy blog" do
-        @blog = create(:blog, user: @user)
-        expect{ post :destroy, id: @blog
-          }.to change(Blog, :count).by(-1)
+        expect{
+          post :destroy, id: @blog
+        }.to change(Blog, :count).by(-1)
       end
     end
 end

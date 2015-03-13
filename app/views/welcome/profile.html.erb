@@ -4,8 +4,19 @@
 <% end %>
 <%= link_to 'All Blogs', published_blogs_blogs_path %><br/>
 <% if current_user.admin? %>
-  <%= link_to 'Blog List', list_blogs_blogs_path %><br/>
+  <%= link_to 'Blog List', list_blogs_blogs_path(offset_val: 0) %><br/>
+  <p>
+    Select user to view his blog:
+    <%= collection_select(:blog, :user_id, User.all, :id, :email)%>
+  </p>
+  <p>
+    <div id="pop">
+      <table border = "1", id = "pop-data">
+      </table>
+    </div>
+  </p>
 <% end %>
+
 
 
 

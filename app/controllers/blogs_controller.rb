@@ -4,6 +4,8 @@ class BlogsController < ApplicationController
 
   def new
     @blog = Blog.new
+    @blog.build_tag
+    @blog.build_picture
   end
 
   def index
@@ -20,14 +22,14 @@ class BlogsController < ApplicationController
   end
 
   def preview
-    unless authorized_user?(@comment)
+    unless authorized_user?(@blog)
       redirect_to root_url, notice: "You are not authorised to preview this blog"
     end
   end
 
   def transition
     if @blog.update(status: params[:status])
-      redirect_to published_blogs_path, notice: "Blog status changed to #{@blog.status}"
+      redirect_to published_blogs_blogs_path, notice: "Blog status changed to #{@blog.status}"
     else
       redirect_to root_url, notice: "Sorry.Unable to change status of blog!"
     end
@@ -35,7 +37,7 @@ class BlogsController < ApplicationController
 
   def create
     @blog = current_user.blogs.new(blog_params)
-    if @blog.save
+    if (@blog.save)
       redirect_to @blog, notice: 'Blog successfully saved'
     else
       render :new
@@ -68,7 +70,17 @@ class BlogsController < ApplicationController
   end
 
   def list_blogs
-    @blogs = Blog.all.order(created_at: :desc)
+    if(session[:offset].nil? || session[:offset] < 0)
+      session[:offset] = 0
+    else
+      session[:offset] += params[:offset_val].to_i
+    end
+    @paginate_blogs = Blog.paginate_blogs(session[:offset])
+    respond_to do |format|
+      format.js { render 'list_blogs' }
+      format.html
+    end
+
   end
 
   def populate_blogs
@@ -79,7 +91,7 @@ class BlogsController < ApplicationController
   private
 
   def blog_params
-    params.require(:blog).permit(:title, :description, :tags)
+    params.require(:blog).permit(:title, :description, picture_attributes: [:img_url], tag_attributes: [:values])
   end
 
   def set_blog

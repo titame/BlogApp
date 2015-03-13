@@ -21,9 +21,19 @@
     <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
   <% end %>
 </p>
+<div align= "right">
+  <%= form_tag(search_path) do %>
+    <div>
+      <%= label_tag "" %>
+      <%= text_field_tag :key %>
+      <%= submit_tag "Search", remote: true, method: :post%>
+    </div>
+  <% end %>
+</div>
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
 <%= yield %>
-
+<div align="Center" id="search-result">
+</div>
 </body>
 </html>

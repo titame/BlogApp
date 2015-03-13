@@ -8,13 +8,13 @@ class CommentsController < ApplicationController
 
   def new
     @comment = @blog.comments.new
+    @comment.build_tag
   end
 
   def edit
     unless authorized_user?(@comment)
       redirect_to root_url, notice: "You are not authorised to edit this comment!"
     end
-    debugger
   end
 
   def create
@@ -43,7 +43,7 @@ class CommentsController < ApplicationController
 
 private
   def comment_params
-    params.require(:comment).permit(:post)
+    params.require(:comment).permit(:post, tag_attributes: [:values])
   end
 
   def set_comment
