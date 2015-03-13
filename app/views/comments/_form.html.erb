@@ -11,10 +11,8 @@
         <%= f.text_area :post %>
       </div>
       <div class="field">
-        <%= f.fields_for :tag do |tag_form| %>
-          <%= tag_form.label :values, 'Tags:' %>
-          <%= tag_form.text_area :values %>
-        <% end %>
+        <%= f.label :values, 'Tags:' %>
+        <%= f.text_area :values %>
       </div>
       <div>
         <%= f.submit "Add Comment" %>

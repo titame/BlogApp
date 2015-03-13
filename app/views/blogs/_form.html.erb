@@ -21,10 +21,8 @@
       <% end %>
       </div>
       <div class="field">
-      <%= f.fields_for :tag do |t| %>
-        <%= t.label :values, 'Tags:' %>
-        <%= t.text_area :values %>
-      <% end %>
+        <%= f.label :values, 'Tags:' %>
+        <%= f.text_area :values %>
       </div>
       <div>
         <%= f.submit "Create" %>

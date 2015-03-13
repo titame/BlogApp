@@ -8,7 +8,6 @@ class CommentsController < ApplicationController
 
   def new
     @comment = @blog.comments.new
-    @comment.build_tag
   end
 
   def edit
@@ -43,7 +42,7 @@ class CommentsController < ApplicationController
 
 private
   def comment_params
-    params.require(:comment).permit(:post, tag_attributes: [:values])
+    params.require(:comment).permit(:post, :values)
   end
 
   def set_comment

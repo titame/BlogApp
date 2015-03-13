@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   root to:"welcome#profile"
   post '/search' => "welcome#search"
+  get '/search_tag' => "welcome#search_tag"
 
   resources :blogs do
     resources :comments

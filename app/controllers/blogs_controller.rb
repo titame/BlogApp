@@ -4,7 +4,6 @@ class BlogsController < ApplicationController
 
   def new
     @blog = Blog.new
-    @blog.build_tag
     @blog.build_picture
   end
 
@@ -91,7 +90,7 @@ class BlogsController < ApplicationController
   private
 
   def blog_params
-    params.require(:blog).permit(:title, :description, picture_attributes: [:img_url], tag_attributes: [:values])
+    params.require(:blog).permit(:title, :description, :values, picture_attributes: [:img_url])
   end
 
   def set_blog

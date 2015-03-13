@@ -1,0 +1,20 @@
+<ul>
+  <% if blogs.present? %>
+    <% blogs.each do |blog| %>
+        <li>
+          <%= blog.title %>
+          <% if current_user.admin? %>
+            <%= blog.status %>
+          <% end %>
+          <%= link_to 'View', blog %>
+        </li>
+    <% end %>
+  <% end %>
+</ul>
+<ul>
+  <% if comments.present? %>
+    <% comments.each do |comment|%>
+      <li>Blog: <%= comment.blog.title %> | Comment:<%= comment.post %></li>
+    <% end %>
+  <% end %>
+</ul>

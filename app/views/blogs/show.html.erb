@@ -4,8 +4,10 @@
     <%= image_tag(@blog.picture.img_url, height: 50, width: 50) %>
   <% end %>
   <p>Description: <%= @blog.description %></p>
-  <% if @blog.tag %>
-    <p>Tags: <%= @blog.tag.values %></p>
+  <% if @blog.taggings.first.value %>
+    <% @blog.taggings.each do |tag| %>
+      <%= tag.value %>
+    <% end %>
   <% end %>
   <% if @blog.comments.exists? %>
     <h3>---Comments---</h3>
@@ -17,7 +19,11 @@
             <%= link_to 'Edit ', edit_blog_comment_path(@blog,comment) %>|
             <%= link_to 'Delete', blog_comment_path(@blog,comment), method: :delete, data: { confirm: 'are you sure?' } %>
           <% end %>
-          <p>Tags:<%= comment.tag.values if comment.tag %>
+          <% if comment.taggings.first %>
+            <% comment.taggings.each do |tag| %>
+              <%= tag.value %>
+            <% end %>
+          <% end %>
         </li>
       <% end %>
     </ul>
