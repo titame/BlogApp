@@ -21,15 +21,3 @@
     <% end %>
   </ul>
 <% end %>
-
-<% if taggings.present? %>
-  <p>Click on tags below to narrow your search further: </p>
-  <ul>
-    <% taggings.each do |tagging|%>
-      <li>
-        <%= link_to tagging.value, search_tag_path(tagging_id: tagging.id) %>
-      </li>
-    <% end %>
-  </ul>
-<% end %>
-

@@ -8,14 +8,15 @@ class WelcomeController < ApplicationController
   def search
     @blogs = Blog.search(params[:key])
     @comments = Comment.search(params[:key])
-    render 'search_result', locals: { blogs: @blogs, comments: @comments}
+    @taggings = Tagging.search(params[:key])
+    render 'search_result', locals: { blogs: @blogs, comments: @comments, taggings: @taggings}
   end
 
 
   def search_tag
-    @blogs = Blog.where(id: Tag.select('tagable_id').where("tagging_id= ? AND tagable_type= 'Blog'",params[:tag_id]))
-    @comments = Comment.where(id: Tag.select('tagable_id').where("tagging_id= ? AND tagable_type= 'Comment'",params[:tag_id]))
-    render 'search_result', locals: { blogs: @blogs, comments: @comments}
+    @blogs = Blog.find_tagged_blogs('Blog', params[:tagging_id])
+    @comments = Comment.find_tagged_comments('Comment', params[:tagging_id])
+    render 'tag_result', locals: { blogs: @blogs, comments: @comments }
   end
 
 end

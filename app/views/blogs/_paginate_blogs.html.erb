@@ -5,7 +5,7 @@
     <th>Description</th>
     <th>Date</th>
   </tr>
-  <% @paginate_blogs.each do |blog|%>
+  <% paginate_blogs.each do |blog|%>
     <tr>
       <td><%= blog.user.email %></td>
       <td><%= blog.title %></td>
@@ -15,10 +15,10 @@
   <% end %>
 </table>
 <div align = "center">
-  <% if @paginate_blogs.count <= 5 %>
+  <% if offset >= 5 %>
     <%= link_to "Prev", list_blogs_blogs_path(offset_val: -5), remote: true, method: :get %>
   <% end %>
-  <% unless @paginate_blogs.count < 5 %>
+  <% unless paginate_blogs.count < 5 %>
     <%= link_to "Next", list_blogs_blogs_path(offset_val: 5), remote: true, method: :get %>
   <% end %>
 </div>

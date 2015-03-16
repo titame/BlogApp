@@ -47,7 +47,6 @@ describe BlogsController do
   describe "POST #create" do
     context "with valid params" do
       it "creates blog of current user" do
-        debugger
         expect{ post :create, blog: attributes_for(:blog)
           }.to change(Blog, :count).by(1)
       end
@@ -78,7 +77,6 @@ describe BlogsController do
 
     context "with valid params" do
       it "updates blog of current user" do
-        debugger
         post :update, id: @blog, blog: {title: @new_blog.title}
         @blog.reload
         expect(@blog.title).to eq @new_blog.title

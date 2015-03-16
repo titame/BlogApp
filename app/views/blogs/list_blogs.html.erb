@@ -16,7 +16,7 @@
     <% end %>
   </table>
   <div align = "center">
-    <% if @paginate_blogs.count == 5 %>
+    <% if session[:offset] >= 5 %>
       <%= link_to "Prev", list_blogs_blogs_path(offset_val: -5), remote: true, method: :get %>
     <% end %>
     <% unless @paginate_blogs.count < 5 %>

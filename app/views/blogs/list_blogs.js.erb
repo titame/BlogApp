@@ -1,1 +1,1 @@
-$('#paginate-blogs').html("<%= escape_javascript render('paginate_blogs', paginate_blog: @paginate_blogs) %>");
+$('#paginate-blogs').html("<%= escape_javascript render('paginate_blogs', paginate_blogs: @paginate_blogs, offset: session[:offset]) %>");

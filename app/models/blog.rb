@@ -11,6 +11,7 @@ class Blog < ActiveRecord::Base
   scope :publishable_blogs, -> { where(status: ["post-published","post-republished"])}
   scope :paginate_blogs, ->(val) { limit(5).offset(val).order(created_at: :desc) }
   scope :search, ->(key) { where("title like ? OR description like ?", "%#{key}%","%#{key}%")}
+  scope :find_tagged_blogs, ->(tagable_type,tagging_id) { where(id: Tag.find_tagged_content(tagable_type,tagging_id)) }
   after_create :create_tagging
 
   def create_tagging

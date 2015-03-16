@@ -19,8 +19,8 @@
 
 <div align = "right">
 Tag-Cloud<br>
-<% @taggings.each do |tag|%>
-  <%= link_to tag.value, search_tag_path(tag_id: tag) %><br>
+<% @taggings.each do |tagging|%>
+  <%= link_to tagging.value, search_tag_path(tagging_id: tagging.id) %><br>
 <% end %>
 </div>
 

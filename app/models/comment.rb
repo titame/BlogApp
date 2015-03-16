@@ -7,7 +7,8 @@ class Comment < ActiveRecord::Base
   attr_accessor :values
   validates :post, presence: true
   scope :search, ->(key) { where("post like ?", "%#{key}%") }
-  after_save :create_tagging, on: [:create]
+  after_create :create_tagging
+  scope :find_tagged_comments, ->(tagable_type,tagging_id) { where(id: Tag.find_tagged_content(tagable_type,tagging_id)) }
 
   def create_tagging
     tag_vals = values.split(',')
