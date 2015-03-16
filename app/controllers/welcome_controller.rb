@@ -14,7 +14,6 @@ class WelcomeController < ApplicationController
 
 
   def search_tag
-    debugger
     @tagging = Tagging.find(params[:tagging_id])
     @blogs = @tagging.tags.collect do |tag|
       if tag.tagable_type == 'Blog'
@@ -24,11 +23,7 @@ class WelcomeController < ApplicationController
       end
     end
     @blogs.uniq!
-    render 'tag_result', locals: { blogs: @blogs, comments: @comments }
+    render 'tag_result', locals: { blogs: @blogs }
   end
 
 end
-
-
-    # @blog_ids = Comment.tagged_comments_blog_ids('Comment', params[:tagging_id])
-    # @blogs = Blog.find_tagged_blogs('Blog', params[:tagging_id], blog_ids)
