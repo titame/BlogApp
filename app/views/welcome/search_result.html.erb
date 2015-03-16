@@ -10,18 +10,6 @@
   </ul>
 <% end %>
 
-<% if comments.present? %>
-  <p> Comments: </p>
-  <ul>
-    <% comments.each do |comment|%>
-      <li>
-        <%= comment.blog.title %> <%= link_to 'View', comment.blog %> |
-        Comment:<%= comment.post %>
-      </li>
-    <% end %>
-  </ul>
-<% end %>
-
 <% if taggings.present? %>
   <p>Click on tags below to narrow your search further: </p>
   <ul>

@@ -1,7 +1,7 @@
 class Blog < ActiveRecord::Base
   belongs_to :user
   has_many :comments, dependent: :destroy
-  has_one :picture, as: :imageable
+  has_one :picture, as: :imageable, dependent: :destroy
   has_many :tags, as: :tagable, dependent: :destroy
   has_many :taggings, through: :tags
   accepts_nested_attributes_for :picture
@@ -10,8 +10,8 @@ class Blog < ActiveRecord::Base
   validates :description, presence: true
   scope :publishable_blogs, -> { where(status: ["post-published","post-republished"])}
   scope :paginate_blogs, ->(val) { limit(5).offset(val).order(created_at: :desc) }
-  scope :search, ->(key) { where("title like ? OR description like ?", "%#{key}%","%#{key}%")}
-  scope :find_tagged_blogs, ->(tagable_type,tagging_id) { where(id: Tag.find_tagged_content(tagable_type,tagging_id)) }
+  scope :search, ->(key, blog_ids) { where("title like ? OR description like ? OR id IN(?)", "%#{key}%","%#{key}%", blog_ids) }
+  scope :find_tagged_blogs, ->(tagable_type,tagging_id) { where("id = ? OR id IN (?)", Tag.find_tagged_ids(tagable_type,tagging_id)) }
   after_create :create_tagging
 
   def create_tagging
