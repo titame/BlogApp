@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  load_and_authorize_resource only: [:edit]
   before_action :set_comment, only: [:edit, :update, :destroy]
   before_action :set_blog, only: [:index, :new, :edit, :create, :destroy]
 
@@ -11,9 +12,9 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    unless authorized_user?(@comment)
-      redirect_to root_url, notice: "You are not authorised to edit this comment!"
-    end
+    # unless authorized_user?(@comment)
+    #   redirect_to root_url, notice: "You are not authorised to edit this comment!"
+    # end
   end
 
   def create

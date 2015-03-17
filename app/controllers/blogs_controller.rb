@@ -1,4 +1,5 @@
 class BlogsController < ApplicationController
+  load_and_authorize_resource only: [:edit, :preview]
   before_action :authenticate_admin, only: [:list_blogs, :populate_blogs]
   before_action :set_blog, only: [:edit, :show, :preview, :update, :transition, :destroy]
 
@@ -12,18 +13,18 @@ class BlogsController < ApplicationController
   end
 
   def edit
-    unless authorized_user?(@blog)
-      redirect_to root_url, notice: "You are not authorised to edit this blog"
-    end
+    # unless authorized_user?(@blog)
+    #   redirect_to root_url, notice: "You are not authorised to edit this blog"
+    # end
   end
 
   def show
   end
 
   def preview
-    unless authorized_user?(@blog)
-      redirect_to root_url, notice: "You are not authorised to preview this blog"
-    end
+    # unless authorized_user?(@blog)
+    #   redirect_to root_url, notice: "You are not authorised to preview this blog"
+    # end
   end
 
   def transition

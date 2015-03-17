@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   rescue_from ActiveRecord::RecordNotFound, with: :bad_access
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
+  end
   helper_method :authorized_user?
 
   # Prevent CSRF attacks by raising an exception.

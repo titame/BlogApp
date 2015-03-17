@@ -8,7 +8,6 @@ class Comment < ActiveRecord::Base
   validates :post, presence: true
   scope :search_blog_ids, ->(key) { where("post like ?", "%#{key}%").pluck(:blog_id).uniq }
   after_create :create_tagging
-  scope :tagged_comments_blog_ids, ->(tagable_type,tagging_id) { where(id: Tag.find_tagged_ids(tagable_type,tagging_id)).pluck(:blog_id).uniq }
 
   def create_tagging
     tag_vals = values.split(',')

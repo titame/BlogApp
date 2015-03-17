@@ -15,7 +15,7 @@
       <% @blog.comments.each do |comment|%>
         <li>
           <%= comment.post %>
-          <% if authorized_user?(comment) %>
+          <% if can? :edit, comment %>
             <%= link_to 'Edit ', edit_blog_comment_path(@blog,comment) %>|
             <%= link_to 'Delete', blog_comment_path(@blog,comment), method: :delete, data: { confirm: 'are you sure?' } %>
           <% end %>
